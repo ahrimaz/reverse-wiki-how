@@ -1,5 +1,3 @@
-import Image from "next/image";
-import styles from "./page.module.css";
 import { Box, Flex } from "@chakra-ui/react";
 import Navbar from "@/components/Navbar";
 import SlideShow from "@/components/SlideShow";
