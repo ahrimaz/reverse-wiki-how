@@ -1,17 +1,16 @@
-// api/socket.ts
-import { Server as HttpServer } from 'http';
-import { NextApiRequest, NextApiResponse } from 'next';
-import { Server as SocketIOServer } from 'socket.io';
+const { Server: SocketIOServer } = require('socket.io');
+const { NextApiRequest, NextApiResponse } = require('next');
+import { Socket } from 'socket.io';
 
-const ioHandler = (req: NextApiRequest, res: NextApiResponse & { socket: { server?: any } }) => {
-  if (res.socket && res.socket.server && !res.socket.server.io) {
+const ioHandler = (req: typeof NextApiRequest, res: typeof NextApiResponse) => {
+  if (!res.socket.server.io) {
     console.log('Setting up Socket.IO server...');
-    const httpServer: HttpServer = res.socket.server as any;
+    const httpServer = res.socket.server;
     const io = new SocketIOServer(httpServer, {
       path: '/api/socket',
     });
 
-    io.on('connection', (socket) => {
+    io.on('connection', (socket: Socket) => {
       console.log('New user connected');
 
       socket.on('slideChange', (slideIndex: number) => {
@@ -28,4 +27,4 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponse & { socket: { serve
   res.end();
 };
 
-export default ioHandler;
+module.exports = ioHandler;
