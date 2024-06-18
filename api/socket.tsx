@@ -1,6 +1,6 @@
 const { Server: SocketIOServer } = require('socket.io');
 const { NextApiRequest, NextApiResponse } = require('next');
-import { Socket } from 'socket.io';
+const { Socket } = require('socket.io');
 
 const ioHandler = (req: typeof NextApiRequest, res: typeof NextApiResponse) => {
   if (!res.socket.server.io) {
@@ -10,7 +10,7 @@ const ioHandler = (req: typeof NextApiRequest, res: typeof NextApiResponse) => {
       path: '/api/socket',
     });
 
-    io.on('connection', (socket: Socket) => {
+    io.on('connection', (socket: typeof Socket) => {
       console.log('New user connected');
 
       socket.on('slideChange', (slideIndex: number) => {
