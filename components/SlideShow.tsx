@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useState, useEffect } from 'react';
 import { Button, Flex } from '@chakra-ui/react';
@@ -6,52 +6,47 @@ import Slides from './Slides';
 import io from 'socket.io-client';
 
 type SlideShowProps = {
-  images: string[];
+    images: string[];
 };
 
 const SlideShow: React.FC<SlideShowProps> = ({ images }) => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [slides, setSlides] = useState<string[]>(images);
+    const [currentSlide, setCurrentSlide] = useState(0);
+    const [socket, setSocket] = useState<ReturnType<typeof io> | null>(null);
 
-  useEffect(() => {
-    const socket = io({
-      path: '/api/socket',
-    });
+    useEffect(() => {
+        const newSocket = io();
+        setSocket(newSocket);
 
-    socket.on('slides', (data: string[]) => {
-      setSlides(data);
-    });
+        newSocket.on('slideChange', (slideIndex: number) => {
+            setCurrentSlide(slideIndex);
+        });
 
-    socket.on('next', () => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    });
+        return () => {
+            newSocket.disconnect();
+        };
+    }, []);
 
-    socket.on('prev', () => {
-      setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-    });
-
-    return () => {
-      socket.disconnect();
+    const goToPreviousSlide = () => {
+        const newIndex = (currentSlide - 1 + images.length) % images.length;
+        setCurrentSlide(newIndex);
+        socket?.emit('slideChange', newIndex);
     };
-  }, [slides.length]);
 
-  const handleNext = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
-  };
+    const goToNextSlide = () => {
+        const newIndex = (currentSlide + 1) % images.length;
+        setCurrentSlide(newIndex);
+        socket?.emit('slideChange', newIndex);
+    };
 
-  const handlePrev = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-  };
-
-  return (
-    <Flex direction="column" align="center" justify="center">
-      <Slides imageSrc={slides[currentSlide]} />
-      <Flex justify="space-between" width="200px" mt={4}>
-        <Button onClick={handlePrev}>Previous</Button>
-        <Button onClick={handleNext}>Next</Button>
-      </Flex>
-    </Flex>
-  );
+    return (
+        <Flex direction="column" align="center" justify="center">
+            <Slides imageSrc={images[currentSlide]} />
+            <Flex justify="space-between" width="200px">
+                <Button onClick={goToPreviousSlide}>Previous</Button>
+                <Button onClick={goToNextSlide}>Next</Button>
+            </Flex>
+        </Flex>
+    );
 };
 
 export default SlideShow;
