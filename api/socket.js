@@ -11,30 +11,38 @@ let io;
 const ioHandler = (req, res) => {
   if (!io) {
     console.log('Setting up Socket.IO server...');
-    io = new Server(res.socket.server, {
+    io = new Server({
       cors: {
         origin: process.env.NEXT_PUBLIC_CLIENT_URL,
-        methods: ['GET', 'POST']
-      }
+        methods: ['GET', 'POST'],
+      },
     });
 
     io.on('connection', (socket) => {
-      console.log('New user connected');
+      console.log(`[${socket.id}] New user connected`);
 
       socket.on('slideChange', (slideIndex) => {
-        console.log(`Slide changed to: ${slideIndex}`);
-        socket.broadcast.emit('slideChange', slideIndex);
+        console.log(`[${socket.id}] Slide changed to: ${slideIndex}`);
+        io.emit('slideChange', slideIndex); // Broadcast to all connected clients
       });
 
       socket.on('disconnect', () => {
-        console.log('User disconnected');
+        console.log(`[${socket.id}] User disconnected`);
       });
     });
-
-    res.socket.server.io = io;
   } else {
     console.log('Socket.IO server already set up.');
   }
+
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Origin', process.env.NEXT_PUBLIC_CLIENT_URL || '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
+
   res.end();
 };
 
