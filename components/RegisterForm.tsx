@@ -5,6 +5,7 @@ import { useState, ChangeEvent } from 'react';
 const RegisterForm: React.FC = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const handleRegister = async () => {
     try {
@@ -24,7 +25,7 @@ const RegisterForm: React.FC = () => {
         const errorData = await response.json();
         console.error('Registration failed:', errorData);
         // failed registration
-        alert(errorData.message);
+        setErrorMessage('Username already exists. Plesae choose a different one.')
       } else {
         const errorData = await response.json();
         console.error('Registration failed:', errorData);
@@ -37,6 +38,7 @@ const RegisterForm: React.FC = () => {
 
   const handleUsernameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
+    setErrorMessage('');
   };
 
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
