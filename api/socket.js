@@ -1,12 +1,12 @@
-const { Server: SocketIOServer } = require('socket.io');
+const { Server } = require('socket.io');
 
 const ioHandler = (req, res) => {
-  if (res.socket && res.socket.server && !res.socket.server.io) {
-    console.log('Setting up Socket.IO server...');
-    const httpServer = res.socket.server;
-    const io = new SocketIOServer(httpServer, {
-      path: '/api/socket',
-    });
+  if (res.socket.server.io) {
+    console.log('Socket is already running');
+  } else {
+    console.log('Socket is initializing');
+    const io = new Server(res.socket.server);
+    res.socket.server.io = io;
 
     io.on('connection', (socket) => {
       console.log('New user connected');
@@ -19,10 +19,8 @@ const ioHandler = (req, res) => {
         console.log('User disconnected');
       });
     });
-
-    res.socket.server.io = io;
   }
   res.end();
 };
 
-module.exports = ioHandler;
+export default ioHandler;
