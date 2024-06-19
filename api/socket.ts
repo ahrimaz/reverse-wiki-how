@@ -1,19 +1,19 @@
-import { Server as HttpServer } from 'http';
-import { NextApiRequest, NextApiResponse } from 'next';
-import { Server as SocketIOServer } from 'socket.io';
+const { Server: HttpServer } = require('http');
+const { NextApiRequest, NextApiResponse } = require('next');
+const { Server: SocketIOServer } = require('socket.io');
 
-type NextApiResponseWithSocket = NextApiResponse & {
+type NextApiResponseWithSocket = typeof NextApiResponse & {
   socket: {
-    server: HttpServer & {
-      io?: SocketIOServer;
+    server: typeof HttpServer & {
+      io?: typeof SocketIOServer;
     };
   };
 };
 
-const ioHandler = (req: NextApiRequest, res: NextApiResponseWithSocket) => {
+const ioHandler = (req: typeof NextApiRequest, res: NextApiResponseWithSocket) => {
   if (res.socket?.server && !res.socket.server.io) {
     console.log('Setting up Socket.IO server...');
-    const httpServer: HttpServer = res.socket.server;
+    const httpServer: typeof HttpServer = res.socket.server;
     const io = new SocketIOServer(httpServer, {
       path: '/api/socket',
     });
