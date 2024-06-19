@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Box, Flex, Link, Text } from '@chakra-ui/react';
 
 export default function Navbar() {
     return (
@@ -11,6 +11,12 @@ export default function Navbar() {
             </Box>
             <Box mr={4}>
                 <Text fontSize="xl" fontWeight="bold">Contact</Text>
+            </Box>
+            <Box mr={4}>
+                <Link fontSize="xl" fontWeight="bold" href='/register'>Register</Link>
+            </Box>
+            <Box mr={4}>
+                <Text fontSize="xl" fontWeight="bold">Login</Text>
             </Box>
         </Flex>
     );
