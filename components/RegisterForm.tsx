@@ -20,19 +20,18 @@ const RegisterForm: React.FC = () => {
       if (response.ok) {
         const data = await response.json();
         console.log('Registration successful:', data);
-        // successful registration
       } else if (response.status === 409) {
         const errorData = await response.json();
         console.error('Registration failed:', errorData);
-        // failed registration
-        setErrorMessage('Username already exists. Plesae choose a different one.')
+        setErrorMessage('Username already exists. Please choose a different one.');
       } else {
         const errorData = await response.json();
         console.error('Registration failed:', errorData);
+        setErrorMessage('Registration failed. Please try again later.');
       }
     } catch (error: any) {
       console.error('Error registering user:', error.message);
-      // handle network or other errors
+      setErrorMessage('Network error. Please try again later.');
     }
   };
 
@@ -47,9 +46,7 @@ const RegisterForm: React.FC = () => {
 
   return (
     <div>
-        <>
-        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-        </>
+      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
       <input
         type="text"
         placeholder="Username"
