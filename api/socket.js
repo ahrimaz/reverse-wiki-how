@@ -11,11 +11,14 @@ let io;
 const ioHandler = (req, res) => {
   if (!io) {
     console.log('Setting up Socket.IO server...');
+
+    // Creating a new Socket.IO server instance
     io = new Server({
       cors: {
-        origin: process.env.NEXT_PUBLIC_CLIENT_URL,
+        origin: process.env.NEXT_PUBLIC_CLIENT_URL, // Ensure to set this correctly
         methods: ['GET', 'POST'],
       },
+      transports: ['websocket', 'polling'], // Add polling transport for compatibility
     });
 
     io.on('connection', (socket) => {
@@ -30,19 +33,14 @@ const ioHandler = (req, res) => {
         console.log(`[${socket.id}] User disconnected`);
       });
     });
+
+    // Attach the Socket.IO server to the response object
+    res.socket.server.io = io;
   } else {
     console.log('Socket.IO server already set up.');
   }
 
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Origin', process.env.NEXT_PUBLIC_CLIENT_URL || '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
-
-  if (req.method === 'OPTIONS') {
-    res.status(200).end();
-    return;
-  }
-
+  // Respond to the request
   res.end();
 };
 

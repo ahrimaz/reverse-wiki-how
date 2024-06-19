@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Button, Flex } from '@chakra-ui/react';
 import Slide from './Slides';
-import io from 'socket.io-client';
+import { io, Socket } from 'socket.io-client';
 
 type SlideShowProps = {
   images: string[];
@@ -11,11 +11,13 @@ type SlideShowProps = {
 
 const SlideShow: React.FC<SlideShowProps> = ({ images }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [socket, setSocket] = useState<SocketIOClient.Socket | null>(null);
+  const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
     const socketURL = process.env.NEXT_PUBLIC_SOCKET_URL || '/api/socket';
-    const newSocket = io(socketURL);
+    const newSocket = io(socketURL, {
+      transports: ['websocket', 'polling'], // Ensure to include polling here if needed
+    });
 
     setSocket(newSocket);
 
