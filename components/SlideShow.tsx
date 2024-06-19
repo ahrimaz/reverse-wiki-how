@@ -1,5 +1,3 @@
-'use client'
-
 import { useState, useEffect } from 'react';
 import { Button, Flex } from '@chakra-ui/react';
 import Slides from './Slides';
@@ -14,7 +12,7 @@ const SlideShow: React.FC<SlideShowProps> = ({ images }) => {
   const [socket, setSocket] = useState<ReturnType<typeof io> | null>(null);
 
   useEffect(() => {
-    const newSocket = io();
+    const newSocket = io(process.env.NEXT_PUBLIC_SOCKET_URL || ''); // Use environment variable
     setSocket(newSocket);
 
     newSocket.on('slideChange', (slideIndex: number) => {
