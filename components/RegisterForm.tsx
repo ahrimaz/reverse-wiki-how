@@ -47,6 +47,9 @@ const RegisterForm: React.FC = () => {
 
   return (
     <div>
+        <>
+        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+        </>
       <input
         type="text"
         placeholder="Username"
