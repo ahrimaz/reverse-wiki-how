@@ -6,10 +6,12 @@ export const config = {
   },
 };
 
+let io;
+
 const ioHandler = (req, res) => {
-  if (!res.socket.server.io) {
+  if (!io) {
     console.log('Setting up Socket.IO server...');
-    const io = new Server(res.socket.server, {
+    io = new Server(res.socket.server, {
       cors: {
         origin: process.env.NEXT_PUBLIC_CLIENT_URL,
         methods: ['GET', 'POST']
@@ -20,6 +22,7 @@ const ioHandler = (req, res) => {
       console.log('New user connected');
 
       socket.on('slideChange', (slideIndex) => {
+        console.log(`Slide changed to: ${slideIndex}`);
         socket.broadcast.emit('slideChange', slideIndex);
       });
 

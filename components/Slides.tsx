@@ -2,14 +2,14 @@
 
 import { Box, Image } from '@chakra-ui/react';
 
-interface slideProps {
+interface SlideProps {
     imageSrc: string;
 }
 
-const slide = ({imageSrc}: slideProps) => (
+const Slide: React.FC<SlideProps> = ({ imageSrc }) => (
     <Box boxSize="md">
         <Image src={imageSrc} alt="slide image" />
     </Box>
-)
+);
 
-export default slide;
+export default Slide;
