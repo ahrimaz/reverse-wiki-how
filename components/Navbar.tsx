@@ -4,7 +4,7 @@ export default function Navbar() {
     return (
         <Flex align="center" justify="space-around" borderBottom="2px solid black" p={2}>
             <Box mr={4}>
-                <Text fontSize="xl" fontWeight="bold">Home</Text>
+                <Link href='/' fontSize="xl" fontWeight="bold">Home</Link>
             </Box>
             <Box mr={4}>
                 <Text fontSize="xl" fontWeight="bold">About</Text>
