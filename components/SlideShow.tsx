@@ -14,16 +14,21 @@ const SlideShow: React.FC<SlideShowProps> = ({ images }) => {
   const [socket, setSocket] = useState<ReturnType<typeof io> | null>(null);
 
   useEffect(() => {
-    const newSocket = io(process.env.NEXT_PUBLIC_SOCKET_URL || ''); // Use environment variable
-    setSocket(newSocket);
+    const socketURL = process.env.NEXT_PUBLIC_SOCKET_URL || '';
+    if (socketURL) {
+      const newSocket = io(socketURL);
+      setSocket(newSocket);
 
-    newSocket.on('slideChange', (slideIndex: number) => {
-      setCurrentSlide(slideIndex);
-    });
+      newSocket.on('slideChange', (slideIndex: number) => {
+        setCurrentSlide(slideIndex);
+      });
 
-    return () => {
-      newSocket.disconnect();
-    };
+      return () => {
+        newSocket.disconnect();
+      };
+    } else {
+      console.error('Socket URL is not set');
+    }
   }, []);
 
   const goToPreviousSlide = () => {

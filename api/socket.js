@@ -1,9 +1,20 @@
-const { Server } = require('socket.io');
+import { Server } from 'socket.io';
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
 
 const ioHandler = (req, res) => {
   if (!res.socket.server.io) {
     console.log('Setting up Socket.IO server...');
-    const io = new Server(res.socket.server);
+    const io = new Server(res.socket.server, {
+      cors: {
+        origin: process.env.NEXT_PUBLIC_CLIENT_URL,
+        methods: ['GET', 'POST']
+      }
+    });
 
     io.on('connection', (socket) => {
       console.log('New user connected');
@@ -18,6 +29,8 @@ const ioHandler = (req, res) => {
     });
 
     res.socket.server.io = io;
+  } else {
+    console.log('Socket.IO server already set up.');
   }
   res.end();
 };
