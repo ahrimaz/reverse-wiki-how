@@ -20,14 +20,18 @@ const RegisterForm: React.FC = () => {
         const data = await response.json();
         console.log('Registration successful:', data);
         // successful registration
-      } else {
+      } else if (response.status === 409) {
         const errorData = await response.json();
         console.error('Registration failed:', errorData);
         // failed registration
+        alert(errorData.message);
+      } else {
+        const errorData = await response.json();
+        console.error('Registration failed:', errorData);
       }
     } catch (error: any) {
       console.error('Error registering user:', error.message);
-      // Handle network or other errors
+      // handle network or other errors
     }
   };
 
