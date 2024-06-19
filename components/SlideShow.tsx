@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Flex } from '@chakra-ui/react';
 import Slide from './Slides';
 import { io, Socket } from 'socket.io-client';
@@ -14,9 +14,9 @@ const SlideShow: React.FC<SlideShowProps> = ({ images }) => {
   const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
-    const socketURL = process.env.NEXT_PUBLIC_SOCKET_URL || '/api/socket';
+    const socketURL = process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:3000';
     const newSocket = io(socketURL, {
-      transports: ['websocket', 'polling'], // Ensure to include polling here if needed
+      transports: ['websocket', 'polling'],
     });
 
     setSocket(newSocket);
