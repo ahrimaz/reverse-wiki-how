@@ -1,10 +1,14 @@
 import RegisterForm from '../../components/RegisterForm';
+import Navbar from '@/components/Navbar';
+import { Flex } from '@chakra-ui/react';
 
 export default function RegisterPage() {
   return (
-    <div>
-      <h1>Register</h1>
+    <>
+      <Navbar />
+      <Flex align="center" justify="center" p={4}>
       <RegisterForm />
-    </div>
+      </Flex>
+    </>
   );
 }
