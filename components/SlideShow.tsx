@@ -1,3 +1,5 @@
+'use client'
+
 import { useState, useEffect } from 'react';
 import { Button, Flex } from '@chakra-ui/react';
 import Slides from './Slides';
