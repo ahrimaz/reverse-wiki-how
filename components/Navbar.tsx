@@ -1,20 +1,10 @@
 'use client'
 
-import { Box, Flex, Link, Text, Spinner } from '@chakra-ui/react';
-import { useAuth } from '@/contexts/AuthContext';
+import { Box, Flex, Link, Text } from '@chakra-ui/react';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function Navbar() {
-  const { isAuthenticated, loading, logout } = useAuth();
-
-  if (loading) {
-    <Spinner
-        thickness='4px'
-        speed='0.65s'
-        emptyColor='gray.200'
-        color='blue.500'
-        size='xl'
-    />
-  }
+  const { isAuthenticated, logout } = useAuth();
 
   return (
     <Flex align="center" justify="space-around" borderBottom="2px solid black" p={2}>

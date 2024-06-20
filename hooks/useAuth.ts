@@ -1,22 +1,14 @@
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+'use client'
 
-const toast = () => {
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-    const router = useRouter();
+import { useContext } from 'react';
+import { AuthContext, AuthContextProps } from '@/contexts/AuthContext'; // Adjust the path as needed
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        setIsAuthenticated(!!token);
-    }, []);
+export const useAuth = (): AuthContextProps => {
+  const context = useContext(AuthContext);
 
-    const logout = () => {
-        localStorage.removeItem('token');
-        setIsAuthenticated(false);
-        router.push('/');
-    };
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
 
-    return { isAuthenticated, logout };
+  return context;
 };
-
-export default toast;

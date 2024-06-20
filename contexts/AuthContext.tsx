@@ -1,47 +1,41 @@
 'use client'
 
-import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { createContext, ReactNode, useState, useEffect } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
 
-interface AuthContextProps {
+export interface AuthContextProps {
   isAuthenticated: boolean;
-  loading: boolean;
   login: (token: string) => void;
   logout: () => void;
 }
 
-const AuthContext = createContext<AuthContextProps | undefined>(undefined);
+export const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(true);
+  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     setIsAuthenticated(!!token);
-    setLoading(false);
-  }, []);
+  }, [pathname]);
 
   const login = (token: string) => {
     localStorage.setItem('token', token);
     setIsAuthenticated(true);
+    router.push('/'); // Redirect to home page on login
   };
 
   const logout = () => {
     localStorage.removeItem('token');
     setIsAuthenticated(false);
+    router.push('/'); // Redirect to home page on logout
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, loading, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
-};
-
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
 };

@@ -2,7 +2,7 @@
 
 import { useState, ChangeEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/hooks/useAuth';
 
 const LoginForm: React.FC = () => {
   const [username, setUsername] = useState<string>('');
