@@ -4,11 +4,14 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { Flex, Spinner } from '@chakra-ui/react';
 
+// Define the User interface with username included
 interface User {
+  isAuthenticated: boolean;
   username: string;
   // Add more user-related fields as needed
 }
 
+// Define the AuthContextProps interface using the User interface
 export interface AuthContextProps {
   user: User | null;
   isAuthenticated: boolean;
@@ -16,6 +19,7 @@ export interface AuthContextProps {
   logout: () => void;
 }
 
+// Create the AuthContext with initial undefined value
 export const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
