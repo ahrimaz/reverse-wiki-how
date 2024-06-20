@@ -4,6 +4,7 @@ import { Providers } from "./providers";
 import Navbar from '@/components/Navbar';
 import { AuthProvider } from '@/contexts/AuthContext';
 import "./globals.css";
+import { ChakraProvider } from "@chakra-ui/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,12 +21,14 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <AuthProvider>
-          <Providers>
-            <Navbar />
-            {children}
-          </Providers>
-        </AuthProvider>
+        <ChakraProvider>
+          <AuthProvider>
+            <Providers>
+              <Navbar />
+              {children}
+            </Providers>
+          </AuthProvider>
+        </ChakraProvider>
       </body>
     </html>
   );

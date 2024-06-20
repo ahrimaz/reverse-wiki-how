@@ -1,15 +1,11 @@
-'use client'
+'use client';
 
 import { useEffect, useRef, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { useRouter } from 'next/navigation';
 import { Flex, Spinner } from '@chakra-ui/react';
 
-interface ChatClientProps {
-  username: string;
-}
-
-const ChatClient: React.FC<ChatClientProps> = ({ username }) => {
+const ChatClient: React.FC<{ username: string }> = ({ username }) => {
   const [messages, setMessages] = useState<string[]>([]);
   const [inputMessage, setInputMessage] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
@@ -17,16 +13,19 @@ const ChatClient: React.FC<ChatClientProps> = ({ username }) => {
   const router = useRouter();
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (!storedUser) {
-      router.push('/'); // Redirect to login page if user not authenticated
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.push('/'); // Redirect to login page if token is not found
       return;
     }
 
     setLoading(false);
 
-    // Connect to socket.io server
-    socketRef.current = io('https://energetic-tidy-ray.glitch.me/chat'); // Connect to /chat namespace
+    // Connect to socket.io server with token
+    socketRef.current = io('https://energetic-tidy-ray.glitch.me/chat', {
+      auth: { token }
+    });
+
     socketRef.current.on('chat message', (msg: string) => {
       setMessages((prevMessages) => [...prevMessages, msg]);
     });
@@ -36,11 +35,12 @@ const ChatClient: React.FC<ChatClientProps> = ({ username }) => {
         socketRef.current.disconnect(); // Clean up socket connection on component unmount
       }
     };
-  }, []);
+  }, [router]);
 
   const sendMessage = () => {
     if (inputMessage.trim() !== '') {
-      socketRef.current?.emit('chat message', `${username}: ${inputMessage}`);
+      const message = `${username}: ${inputMessage}`;
+      socketRef.current?.emit('chat message', message); // Include username in the message
       setInputMessage('');
     }
   };
