@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
+import { Flex, Spinner } from '@chakra-ui/react';
 
 interface User {
   username: string;
@@ -46,7 +47,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <AuthContext.Provider value={{ user, isAuthenticated: !!user, login, logout }}>
-      {loading ? <p>Loading...</p> : children}
+      {loading ? (
+        <Flex
+          height="100vh"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Spinner size="xl" />
+        </Flex>
+      ) : (
+        children
+      )}
     </AuthContext.Provider>
   );
 };
