@@ -17,33 +17,31 @@ const ChatClient: React.FC<ChatClientProps> = ({ username }) => {
   const router = useRouter();
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (!storedUser) {
-      router.push('/'); // Redirect to login page if user not authenticated
-      return;
-    }
-
-    setLoading(false);
-
-    // Connect to socket.io server
-    socketRef.current = io('https://energetic-tidy-ray.glitch.me/chat'); // Connect to /chat namespace
-    socketRef.current.on('chat message', (msg: string) => {
-      setMessages((prevMessages) => [...prevMessages, msg]);
+    socketRef.current = io('https://energetic-tidy-ray.glitch.me/chat');
+    socketRef.current.on('connect', () => {
+      console.log('Connected to server');
     });
-
+  
+    socketRef.current.on('chat message', (msg: string) => {
+      const [sender, message] = msg.split(':');
+      setMessages((prevMessages) => [...prevMessages, `${sender.trim()}: ${message.trim()}`]);
+    });
+  
     return () => {
       if (socketRef.current) {
-        socketRef.current.disconnect(); // Clean up socket connection on component unmount
+        socketRef.current.disconnect();
       }
     };
   }, []);
+  
 
   const sendMessage = () => {
     if (inputMessage.trim() !== '') {
-      socketRef.current?.emit('chat message', `${username}: ${inputMessage}`);
+      socketRef.current?.emit('chat message', inputMessage);
       setInputMessage('');
     }
   };
+  
 
   if (loading) {
     return (
