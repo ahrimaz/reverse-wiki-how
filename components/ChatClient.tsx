@@ -26,7 +26,7 @@ const ChatClient: React.FC<ChatClientProps> = ({ username }) => {
     setLoading(false);
 
     // Connect to socket.io server
-    socketRef.current = io('/chat'); // Connect to /chat namespace
+    socketRef.current = io('https://energetic-tidy-ray.glitch.me/chat'); // Connect to /chat namespace
     socketRef.current.on('chat message', (msg: string) => {
       setMessages((prevMessages) => [...prevMessages, msg]);
     });
