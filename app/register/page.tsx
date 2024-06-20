@@ -1,5 +1,4 @@
-import RegisterForm from '../../components/RegisterForm';
-import Navbar from '@/components/Navbar';
+import RegisterForm from '@/components/RegisterForm';
 import { Flex } from '@chakra-ui/react';
 
 export default function RegisterPage() {
