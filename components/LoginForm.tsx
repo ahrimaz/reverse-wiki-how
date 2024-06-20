@@ -3,6 +3,7 @@
 import { useState, ChangeEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
+import { Input, Button } from "@chakra-ui/react";
 
 const LoginForm: React.FC = () => {
   const [username, setUsername] = useState<string>('');
@@ -45,19 +46,31 @@ const LoginForm: React.FC = () => {
 
   return (
     <div>
-      <input
+      <Input
         type="text"
         placeholder="Username"
         value={username}
         onChange={handleUsernameChange}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            handleLogin();
+          }
+        }}
       />
-      <input
+      <Input
         type="password"
         placeholder="Password"
         value={password}
         onChange={handlePasswordChange}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            handleLogin();
+          }
+        }}
       />
-      <button onClick={handleLogin}>Login</button>
+      <Button onClick={handleLogin} w="100%">
+        Login
+      </Button>
     </div>
   );
 };

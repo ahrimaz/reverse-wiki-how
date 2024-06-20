@@ -9,6 +9,7 @@ const Logout: React.FC = () => {
 
   useEffect(() => {
     localStorage.removeItem('token');
+    localStorage.removeItem('username');
     setTimeout(() => {
         router.push('/');
     }, 2000);

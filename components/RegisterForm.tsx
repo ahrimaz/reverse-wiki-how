@@ -63,14 +63,24 @@ const RegisterForm: React.FC = () => {
                 placeholder="Username"
                 value={username}
                 onChange={handleUsernameChange}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                        handleRegister();
+                    }
+                }}
             />
             <Input
                 type="password"
                 placeholder="Password"
                 value={password}
                 onChange={handlePasswordChange}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                        handleRegister();
+                    }
+                }}
             />
-            <Button justifyContent="center" onClick={handleRegister} mx="auto" display="block">
+            <Button justifyContent="center" onClick={handleRegister} w="100%">
                 Register
             </Button>
         </Box>
