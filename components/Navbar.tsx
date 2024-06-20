@@ -1,6 +1,11 @@
+'use client'
+
 import { Box, Flex, Link, Text } from '@chakra-ui/react';
+import useAuth from '@/hooks/useAuth';
 
 export default function Navbar() {
+    const isAuthenticated = useAuth();
+
     return (
         <Flex align="center" justify="space-around" borderBottom="2px solid black" p={2}>
             <Box mr={4}>
