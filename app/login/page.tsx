@@ -1,5 +1,4 @@
 import LoginForm from '@/components/LoginForm';
-import Navbar from '@/components/Navbar';
 import { Flex } from '@chakra-ui/react';
 
 export default function LoginPage() {
