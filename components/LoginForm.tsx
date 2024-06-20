@@ -23,6 +23,7 @@ const LoginForm: React.FC = () => {
 
             if (response.ok) {
                 const data = await response.json();
+                localStorage.setItem('token', data.token);
                 console.log('login successful:', data);
                 setTimeout(() => {
                     router.push('/');
