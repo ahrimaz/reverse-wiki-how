@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation';
 import { useState, ChangeEvent } from 'react';
 import { Input, Button, Box, Text } from '@chakra-ui/react';
 
@@ -7,6 +8,8 @@ const RegisterForm: React.FC = () => {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [errorMessage, setErrorMessage] = useState<string>('');
+    const [successMessage, setSuccessMessage] = useState<string>('');
+    const router = useRouter();
 
     const handleRegister = async () => {
         try {
@@ -21,6 +24,10 @@ const RegisterForm: React.FC = () => {
             if (response.ok) {
                 const data = await response.json();
                 console.log('Registration successful:', data);
+                setSuccessMessage('Registration successful. Redirecting to login page...');
+                setTimeout(() => {
+                    router.push('/');
+                }, 2000);
             } else if (response.status === 409) {
                 const errorData = await response.json();
                 console.error('Registration failed:', errorData);
@@ -39,6 +46,7 @@ const RegisterForm: React.FC = () => {
     const handleUsernameChange = (e: ChangeEvent<HTMLInputElement>) => {
         setUsername(e.target.value);
         setErrorMessage('');
+        setSuccessMessage('');
     };
 
     const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -48,6 +56,7 @@ const RegisterForm: React.FC = () => {
     return (
         <Box>
             {errorMessage && <Text color="red">{errorMessage}</Text>}
+            <>{successMessage && <Text color="green">{successMessage}</Text>}</>
             <Input
                 type="text"
                 placeholder="Username"
