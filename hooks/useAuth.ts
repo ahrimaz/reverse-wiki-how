@@ -1,18 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 const useAuth = () => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+    const router = useRouter();
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        if (token) {
-            setIsAuthenticated(true);
-        } else {
-            setIsAuthenticated(false);
-        }
+        setIsAuthenticated(!!token);
     }, []);
 
-    return isAuthenticated;
+    const logout = () => {
+        localStorage.removeItem('token');
+        setIsAuthenticated(false);
+        router.push('/');
+    };
+
+    return { isAuthenticated, logout };
 };
 
 export default useAuth;
