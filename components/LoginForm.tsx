@@ -24,6 +24,7 @@ const LoginForm: React.FC = () => {
         const data = await response.json();
         login(data.token);
         localStorage.setItem('username', username);
+        localStorage.setItem('token', data.token);
         router.push('/');
       } else {
         const errorData = await response.json();
