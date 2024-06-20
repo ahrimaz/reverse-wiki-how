@@ -15,7 +15,7 @@ export default function Home() {
     <>
     <Flex align="center" justify="center" p={4} m={4}>
     <SlideShow images={images} />
-    <ChatClient username="admin-test" />
+    <ChatClient />
     </Flex>
     </>
   );

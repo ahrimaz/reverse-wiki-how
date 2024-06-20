@@ -5,19 +5,23 @@ import { io, Socket } from 'socket.io-client';
 import { useRouter } from 'next/navigation';
 import { Flex, Spinner } from '@chakra-ui/react';
 
-const ChatClient: React.FC<{ username: string }> = ({ username }) => {
+const ChatClient: React.FC = () => {
   const [messages, setMessages] = useState<string[]>([]);
   const [inputMessage, setInputMessage] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
+  const [username, setUsername] = useState<string>('');
   const socketRef = useRef<Socket | null>(null);
   const router = useRouter();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (!token) {
-      router.push('/'); // Redirect to login page if token is not found
+    const storedUsername = localStorage.getItem('username');
+    if (!token || !storedUsername) {
+      router.push('/'); // Redirect to login page if token or username is not found
       return;
     }
+
+    setUsername(storedUsername); // Set username from local storage
 
     setLoading(false);
 
