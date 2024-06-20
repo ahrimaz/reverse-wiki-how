@@ -1,5 +1,6 @@
 import RegisterForm from '../../components/RegisterForm';
 import Navbar from '@/components/Navbar';
+import LoginForm from '@/components/LoginForm';
 import { Flex } from '@chakra-ui/react';
 
 export default function RegisterPage() {
@@ -8,6 +9,7 @@ export default function RegisterPage() {
       <Navbar />
       <Flex align="center" justify="center" p={4}>
       <RegisterForm />
+      <LoginForm />
       </Flex>
     </>
   );
