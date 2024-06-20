@@ -12,7 +12,6 @@ const images = [
 export default function Home() {
   return (
     <>
-    <Navbar />
     <Flex align="center" justify="center" p={4} m={4}>
     <SlideShow images={images} />
     </Flex>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-const useAuth = () => {
+const toast = () => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const router = useRouter();
 
@@ -19,4 +19,4 @@ const useAuth = () => {
     return { isAuthenticated, logout };
 };
 
-export default useAuth;
+export default toast;
