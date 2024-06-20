@@ -70,7 +70,7 @@ const LoginForm: React.FC = () => {
                 onChange={handlePasswordChange}
                 type="password"
             />
-            <Button onClick={handleLogin}>Login</Button>
+            <Button mx="auto" display="block" justifyContent="center" onClick={handleLogin}>Login</Button>
         </Box>
     );
 };
