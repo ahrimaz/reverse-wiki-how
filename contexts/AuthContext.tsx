@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 interface AuthContextProps {
-  isAuthenticated: boolean;
+  isAuthenticated: boolean | null;
   login: () => void;
   logout: () => void;
 }
@@ -11,13 +11,11 @@ interface AuthContextProps {
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token) {
-      setIsAuthenticated(true);
-    }
+    setIsAuthenticated(!!token);
   }, []);
 
   const login = () => {
@@ -28,6 +26,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsAuthenticated(false);
     localStorage.removeItem('token');
   };
+
+  if (isAuthenticated === null) {
+    return null;
+  }
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
