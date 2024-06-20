@@ -1,6 +1,7 @@
 'use client'
 
-import { Box, Flex, Link, Text } from '@chakra-ui/react';
+import { Box, Flex, Text } from '@chakra-ui/react';
+import { Link } from '@chakra-ui/next-js';
 import { useAuth } from '@/hooks/useAuth';
 
 export default function Navbar() {
