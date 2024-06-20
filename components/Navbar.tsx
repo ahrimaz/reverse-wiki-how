@@ -1,6 +1,7 @@
 'use client'
 
 import { Box, Flex, Link, Text } from '@chakra-ui/react';
+import { useRouter } from 'next/navigation';
 import useAuth from '@/hooks/useAuth';
 
 export default function Navbar() {
