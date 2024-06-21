@@ -1,5 +1,3 @@
-'use client';
-
 import { useEffect, useRef, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { useRouter } from 'next/navigation';
@@ -10,6 +8,7 @@ const ChatClient: React.FC = () => {
   const [inputMessage, setInputMessage] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
   const socketRef = useRef<Socket | null>(null);
+  const chatContainerRef = useRef<HTMLDivElement | null>(null); // Moved useRef here
   const router = useRouter();
 
   useEffect(() => {
@@ -76,8 +75,6 @@ const ChatClient: React.FC = () => {
       </Flex>
     );
   }
-
-  const chatContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (chatContainerRef.current) {
