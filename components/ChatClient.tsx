@@ -69,7 +69,7 @@ const ChatClient: React.FC = () => {
 
   const sendMessage = () => {
     if (inputMessage.trim() !== '') {
-      const message = `${username}: ${inputMessage}`;
+      const message = `: ${inputMessage}`;
       socketRef.current?.emit('chat message', message); // Include authenticated username in the message
       setInputMessage('');
     }
