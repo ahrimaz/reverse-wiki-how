@@ -28,7 +28,7 @@ const RegisterForm: React.FC = () => {
                 setSuccessMessage('Registration successful. Redirecting to login page...');
                 setTimeout(() => {
                     router.push('/login');
-                }, 30000);
+                }, 6000);
             } else if (response.status === 409) {
                 const errorData = await response.json();
                 console.error('Registration failed:', errorData);
