@@ -29,7 +29,7 @@ const LoginForm: React.FC = () => {
         setSuccessMessage('Login successful. Redirecting to home page...');
         setTimeout(() => {
           router.push('/');
-      }, 6000);
+      }, 30000);
       } else {
         const errorData = await response.json();
         setErrorMessage('Login failed. Please try again.');
