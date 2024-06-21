@@ -72,8 +72,13 @@ const ChatClient: React.FC = () => {
         value={inputMessage}
         onChange={(e) => setInputMessage(e.target.value)}
         marginBottom="10px"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            sendMessage();
+          }
+        }}
       />
-      <Button onClick={sendMessage}>Send</Button>
+      <Button w="100%" onClick={sendMessage}>Send</Button>
     </Flex>
   );
 };
