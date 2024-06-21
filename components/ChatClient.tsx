@@ -3,25 +3,25 @@
 import { useEffect, useRef, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { useRouter } from 'next/navigation';
-import { Box, Button, Flex, Input, Spinner } from '@chakra-ui/react';
+import { Flex, Spinner } from '@chakra-ui/react';
 
 const ChatClient: React.FC = () => {
   const [messages, setMessages] = useState<string[]>([]);
   const [inputMessage, setInputMessage] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
-  const [username, setUsername] = useState<string>('');
+  const [username, setUsername] = useState<string>(''); // State to store authenticated username
   const socketRef = useRef<Socket | null>(null);
   const router = useRouter();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    const storedUsername = localStorage.getItem('username');
-    if (!token || !storedUsername) {
-      router.push('/'); // Redirect to login page if token or username is not found
+    if (!token) {
+      router.push('/'); // Redirect to login page if token is not found
       return;
     }
 
-    setUsername(storedUsername); // Set username from local storage
+    // Fetch authenticated user data including username from server
+    fetchUserData(token);
 
     setLoading(false);
 
@@ -41,10 +41,36 @@ const ChatClient: React.FC = () => {
     };
   }, [router]);
 
+  const fetchUserData = async (token: string) => {
+    try {
+      const response = await fetch('https://energetic-tidy-ray.glitch.me/user', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setUsername(data.username); // Set authenticated username to state
+      } else {
+        console.error('Failed to fetch user data:', response.status);
+        // Handle error fetching user data
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error('Error fetching user data:', error.message);
+        // Handle fetch error
+      } else {
+        console.error('An unexpected error occurred:', error);
+        // Handle the case where the error is not an instance of Error
+      }
+    }
+  };
+
   const sendMessage = () => {
     if (inputMessage.trim() !== '') {
       const message = `${username}: ${inputMessage}`;
-      socketRef.current?.emit('chat message', message); // Include username in the message
+      socketRef.current?.emit('chat message', message); // Include authenticated username in the message
       setInputMessage('');
     }
   };
@@ -59,23 +85,13 @@ const ChatClient: React.FC = () => {
 
   return (
     <div>
-      <Box height="300px" overflowY="scroll" border="1px solid #ccc" p="10px" mb="10px">
+      <div style={{ height: '300px', overflowY: 'scroll', border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
         {messages.map((msg, index) => (
           <div key={index}>{msg}</div>
         ))}
-      </Box>
-      <Input
-        type="text"
-        value={inputMessage}
-        onChange={(e) => setInputMessage(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            sendMessage();
-          }       
-        }}
-        mb="10px"
-      />
-      <Button onClick={sendMessage}>Send</Button>
+      </div>
+      <input type="text" value={inputMessage} onChange={(e) => setInputMessage(e.target.value)} />
+      <button onClick={sendMessage}>Send</button>
     </div>
   );
 };
