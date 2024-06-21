@@ -3,7 +3,7 @@
 import { useState, ChangeEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
-import { Input, Button } from '@chakra-ui/react';
+import { Input, Button, Box, Text } from '@chakra-ui/react';
 
 const LoginForm: React.FC = () => {
   const [username, setUsername] = useState<string>('');
@@ -48,7 +48,9 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <div>
+    <Box>
+      {errorMessage && <Text color="red">{errorMessage}</Text>}
+      <>{successMessage && <Text color="green">{successMessage}</Text>}</>
       <Input
         type="text"
         placeholder="Username"
@@ -72,7 +74,7 @@ const LoginForm: React.FC = () => {
         }}
       />
       <Button w="100%" onClick={handleLogin}>Login</Button>
-    </div>
+    </Box>
   );
 };
 
