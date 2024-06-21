@@ -1,8 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
-import { Button, Flex } from '@chakra-ui/react';
-import Slide from './Slides';
+import { Button, Flex, Box, Image } from '@chakra-ui/react';
 import { io, Socket } from 'socket.io-client';
 
 type SlideShowProps = {
@@ -58,9 +57,18 @@ const SlideShow: React.FC<SlideShowProps> = ({ images }) => {
   };
 
   return (
-    <Flex direction="column" align="center" justify="center">
-      <Slide imageSrc={images[currentSlide]} />
-      <Flex justify="space-between" width="200px">
+    <Flex direction="column" align="center" justify="center" p={4} w="100%" maxW="600px" mx="auto">
+      <Box width="100%" mb={4}>
+        <Image 
+          src={images[currentSlide]} 
+          alt={`Slide ${currentSlide + 1}`} 
+          objectFit="contain" 
+          maxH="400px" 
+          w="100%" 
+          borderRadius="md"
+        />
+      </Box>
+      <Flex justify="space-between" width="100%" maxW="200px">
         <Button onClick={goToPreviousSlide}>Previous</Button>
         <Button onClick={goToNextSlide}>Next</Button>
       </Flex>
