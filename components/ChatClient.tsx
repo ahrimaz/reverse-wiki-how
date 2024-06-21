@@ -1,5 +1,3 @@
-'use client'
-
 import { useEffect, useRef, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { useRouter } from 'next/navigation';
@@ -35,12 +33,19 @@ const ChatClient: React.FC = () => {
     // Fetch chat history on component mount
     fetchChatHistory(token);
 
+    // Clean up socket connection on component unmount
     return () => {
       if (socketRef.current) {
-        socketRef.current.disconnect(); // Clean up socket connection on component unmount
+        socketRef.current.disconnect();
       }
     };
   }, [router]);
+
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
 
   const fetchChatHistory = async (token: string | null) => {
     try {
@@ -77,12 +82,6 @@ const ChatClient: React.FC = () => {
       </Flex>
     );
   }
-
-  useEffect(() => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-    }
-  }, [messages]);
 
   return (
     <Flex direction="column" alignItems="center" p={4} w="100%" maxW="600px" mx="auto">
