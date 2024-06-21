@@ -27,7 +27,9 @@ const LoginForm: React.FC = () => {
         const data = await response.json();
         login(data.token, username); // Pass token and username to login
         setSuccessMessage('Login successful. Redirecting to home page...');
-        router.push('/');
+        setTimeout(() => {
+          router.push('/login');
+      }, 2000);
       } else {
         const errorData = await response.json();
         setErrorMessage('Login failed. Please try again.');
