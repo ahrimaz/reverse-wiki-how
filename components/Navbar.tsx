@@ -13,7 +13,7 @@ export default function Navbar() {
         <Link href='/' fontSize="xl" fontWeight="bold">Home</Link>
       </Box>
       <Box mr={4}>
-        <Text fontSize="xl" fontWeight="bold">About</Text>
+        <Link href='/about' fontSize="xl" fontWeight="bold">About</Link>
       </Box>
       <Box mr={4}>
         <Text fontSize="xl" fontWeight="bold">Contact</Text>
