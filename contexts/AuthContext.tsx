@@ -1,5 +1,4 @@
-'use client'
-
+'use client';
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { Flex, Spinner } from '@chakra-ui/react';
@@ -15,7 +14,7 @@ interface User {
 export interface AuthContextProps {
   user: User | null;
   isAuthenticated: boolean;
-  login: (user: User) => void;
+  login: (token: string, username: string) => void;
   logout: () => void;
 }
 
@@ -30,21 +29,24 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     // Check local storage for existing user session
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+    const token = localStorage.getItem('token');
+    const username = localStorage.getItem('username');
+    if (token && username) {
+      setUser({ isAuthenticated: true, username });
     }
     setLoading(false);
   }, []);
 
-  const login = (user: User) => {
-    localStorage.setItem('user', JSON.stringify(user));
-    setUser(user);
+  const login = (token: string, username: string) => {
+    localStorage.setItem('token', token);
+    localStorage.setItem('username', username);
+    setUser({ isAuthenticated: true, username });
     router.push('/'); // Redirect to home page on login
   };
 
   const logout = () => {
-    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
     setUser(null);
     router.push('/'); // Redirect to home page on logout
   };

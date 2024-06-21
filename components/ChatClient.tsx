@@ -9,19 +9,16 @@ const ChatClient: React.FC = () => {
   const [messages, setMessages] = useState<string[]>([]);
   const [inputMessage, setInputMessage] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
-  const [username, setUsername] = useState<string>(''); // State to store authenticated username
   const socketRef = useRef<Socket | null>(null);
   const router = useRouter();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (!token) {
-      router.push('/'); // Redirect to login page if token is not found
+    const username = localStorage.getItem('username');
+    if (!token || !username) {
+      router.push('/'); // Redirect to login page if token or username is not found
       return;
     }
-
-    // Fetch authenticated user data including username from server
-    fetchUserData(token);
 
     setLoading(false);
 
@@ -41,36 +38,11 @@ const ChatClient: React.FC = () => {
     };
   }, [router]);
 
-  const fetchUserData = async (token: string) => {
-    try {
-      const response = await fetch('https://energetic-tidy-ray.glitch.me/user', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setUsername(data.username); // Set authenticated username to state
-      } else {
-        console.error('Failed to fetch user data:', response.status);
-        // Handle error fetching user data
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        console.error('Error fetching user data:', error.message);
-        // Handle fetch error
-      } else {
-        console.error('An unexpected error occurred:', error);
-        // Handle the case where the error is not an instance of Error
-      }
-    }
-  };
-
   const sendMessage = () => {
     if (inputMessage.trim() !== '') {
-      const message = `: ${inputMessage}`;
-      socketRef.current?.emit('chat message', message); // Include authenticated username in the message
+      const username = localStorage.getItem('username'); // Get username from local storage
+      const message = `${username}: ${inputMessage}`;
+      socketRef.current?.emit('chat message', message); // Include username in the message
       setInputMessage('');
     }
   };

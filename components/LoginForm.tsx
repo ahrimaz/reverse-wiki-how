@@ -1,9 +1,8 @@
-'use client'
+'use client';
 
 import { useState, ChangeEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
-import { Input, Button } from "@chakra-ui/react";
 
 const LoginForm: React.FC = () => {
   const [username, setUsername] = useState<string>('');
@@ -23,9 +22,7 @@ const LoginForm: React.FC = () => {
 
       if (response.ok) {
         const data = await response.json();
-        login(data.token);
-        localStorage.setItem('username', username);
-        localStorage.setItem('token', data.token);
+        login(data.token, username); // Pass token and username to login
         router.push('/');
       } else {
         const errorData = await response.json();
@@ -46,31 +43,24 @@ const LoginForm: React.FC = () => {
 
   return (
     <div>
-      <Input
+      <input
         type="text"
         placeholder="Username"
         value={username}
         onChange={handleUsernameChange}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            handleLogin();
-          }
-        }}
       />
-      <Input
+      <input
         type="password"
         placeholder="Password"
         value={password}
         onChange={handlePasswordChange}
         onKeyDown={(e) => {
-          if (e.key === "Enter") {
+          if (e.key === 'Enter') {
             handleLogin();
           }
         }}
       />
-      <Button onClick={handleLogin} w="100%">
-        Login
-      </Button>
+      <button onClick={handleLogin}>Login</button>
     </div>
   );
 };
