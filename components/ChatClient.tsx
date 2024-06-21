@@ -77,9 +77,18 @@ const ChatClient: React.FC = () => {
     );
   }
 
+  const chatContainerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
+
   return (
     <Flex direction="column" alignItems="center" p={4} w="100%" maxW="600px" mx="auto">
       <Box
+        ref={chatContainerRef}
         height="300px"
         overflowY="scroll"
         border="1px solid #ccc"
