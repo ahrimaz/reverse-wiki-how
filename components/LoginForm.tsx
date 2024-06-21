@@ -54,11 +54,6 @@ const LoginForm: React.FC = () => {
         placeholder="Password"
         value={password}
         onChange={handlePasswordChange}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            handleLogin();
-          }
-        }}
       />
       <button onClick={handleLogin}>Login</button>
     </div>
