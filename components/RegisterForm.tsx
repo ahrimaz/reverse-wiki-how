@@ -25,9 +25,9 @@ const RegisterForm: React.FC = () => {
                 const data = await response.json();
                 console.log('Registration successful:', data);
                 localStorage.setItem('token', data.token);
-                setSuccessMessage('Registration successful. Redirecting to home page...');
+                setSuccessMessage('Registration successful. Redirecting to login page...');
                 setTimeout(() => {
-                    router.push('/');
+                    router.push('/login');
                 }, 2000);
             } else if (response.status === 409) {
                 const errorData = await response.json();

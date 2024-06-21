@@ -26,12 +26,15 @@ const LoginForm: React.FC = () => {
       if (response.ok) {
         const data = await response.json();
         login(data.token, username); // Pass token and username to login
+        setSuccessMessage('Login successful. Redirecting to home page...');
         router.push('/');
       } else {
         const errorData = await response.json();
+        setErrorMessage('Login failed. Please try again.');
         console.error('Login failed:', errorData);
       }
     } catch (error: any) {
+      setErrorMessage('Network error. Please try again later.');
       console.error('Error logging in:', error.message);
     }
   };
