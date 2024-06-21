@@ -31,12 +31,35 @@ const ChatClient: React.FC = () => {
       setMessages((prevMessages) => [...prevMessages, msg]);
     });
 
+    // Fetch chat history on component mount
+    fetchChatHistory(token);
+
     return () => {
       if (socketRef.current) {
         socketRef.current.disconnect(); // Clean up socket connection on component unmount
       }
     };
   }, [router]);
+
+  const fetchChatHistory = async (token: string | null) => {
+    try {
+      const response = await fetch('https://energetic-tidy-ray.glitch.me/chat/history', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      if (response.ok) {
+        const chatHistory = await response.json();
+        const formattedMessages = chatHistory.map((msg: { username: string; message: string }) => `${msg.username}: ${msg.message}`);
+        setMessages(formattedMessages);
+      } else {
+        console.error('Failed to fetch chat history:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error fetching chat history:', error);
+    }
+  };
 
   const sendMessage = () => {
     if (inputMessage.trim() !== '') {
