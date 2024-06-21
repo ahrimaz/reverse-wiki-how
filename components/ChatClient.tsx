@@ -55,13 +55,17 @@ const ChatClient: React.FC = () => {
   }
 
   return (
-    <Flex direction="column" alignItems="center">
+    <Flex direction="column" alignItems="center" p={4} w="100%" maxW="600px" mx="auto">
       <Box
         height="300px"
         overflowY="scroll"
         border="1px solid #ccc"
-        padding="10px"
-        marginBottom="10px"
+        p={4}
+        mb={4}
+        w="100%"
+        whiteSpace="pre-wrap"
+        overflowWrap="break-word"
+        wordBreak="break-word"
       >
         {messages.map((msg, index) => (
           <Text key={index}>{msg}</Text>
@@ -71,12 +75,13 @@ const ChatClient: React.FC = () => {
         type="text"
         value={inputMessage}
         onChange={(e) => setInputMessage(e.target.value)}
-        marginBottom="10px"
+        mb={4}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
             sendMessage();
           }
         }}
+        w="100%"
       />
       <Button w="100%" onClick={sendMessage}>Send</Button>
     </Flex>
