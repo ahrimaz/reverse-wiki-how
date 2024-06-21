@@ -40,8 +40,7 @@ const ChatClient: React.FC = () => {
 
   const sendMessage = () => {
     if (inputMessage.trim() !== '') {
-      const username = localStorage.getItem('username'); // Get username from local storage
-      const message = `${username}: ${inputMessage}`;
+      const message = `${inputMessage}`;
       socketRef.current?.emit('chat message', message); // Include username in the message
       setInputMessage('');
     }
