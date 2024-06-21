@@ -8,6 +8,8 @@ import { Input, Button } from '@chakra-ui/react';
 const LoginForm: React.FC = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [successMessage, setSuccessMessage] = useState<string>('');
   const { login } = useAuth();
   const router = useRouter();
 

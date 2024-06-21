@@ -13,7 +13,7 @@ const RegisterForm: React.FC = () => {
 
     const handleRegister = async () => {
         try {
-            const response = await fetch('https://energetic-tidy-ray.glitch.me/register', {
+            const response = await fetch('https://energetic-tidy-ray.glitch.me/auth/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ const RegisterForm: React.FC = () => {
                 const data = await response.json();
                 console.log('Registration successful:', data);
                 localStorage.setItem('token', data.token);
-                setSuccessMessage('Registration successful. Redirecting to login page...');
+                setSuccessMessage('Registration successful. Redirecting to home page...');
                 setTimeout(() => {
                     router.push('/');
                 }, 2000);
