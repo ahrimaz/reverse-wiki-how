@@ -10,7 +10,7 @@ const AboutPage: React.FC = () => {
                 Welcome!
             </Text>
             <Text fontSize="lg" mt={4}>
-                This is a simple application inspired by Griffin McElroy's reverse wiki how game.
+            This is a simple application inspired by Griffin McElroy&apos;s reverse wiki how game.
             </Text>
         </Box>
     );
