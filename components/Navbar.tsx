@@ -16,7 +16,7 @@ export default function Navbar() {
         <Link href='/about' fontSize="xl" fontWeight="bold">About</Link>
       </Box>
       <Box mr={4}>
-        <Text fontSize="xl" fontWeight="bold">Contact</Text>
+        <Link href='/contact' fontSize="xl" fontWeight="bold">Contact</Link>
       </Box>
       <Box mr={4}>
         <Link fontSize="xl" fontWeight="bold" href='/register'>Register</Link>
