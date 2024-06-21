@@ -14,8 +14,12 @@ export default function Home() {
   return (
     <>
       <Flex align="center" justify="center">
-        <SlideShow images={images} />
-        <ChatClient />
+        <Box mr={4}>
+          <SlideShow images={images} />
+        </Box>
+        <Box ml={4}>
+          <ChatClient />
+        </Box>
       </Flex>
     </>
   );
