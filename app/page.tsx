@@ -13,10 +13,10 @@ export default function Home() {
 
   return (
     <>
-    <Flex align="center" justify="center" p={4} m={4}>
-    <SlideShow images={images} />
-    <ChatClient />
-    </Flex>
+      <Flex align="center" justify="center" p={4} m={4} h="100vh">
+        <SlideShow images={images} />
+        <ChatClient />
+      </Flex>
     </>
   );
 }

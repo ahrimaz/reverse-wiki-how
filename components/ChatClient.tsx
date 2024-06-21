@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { useRouter } from 'next/navigation';
-import { Flex, Spinner } from '@chakra-ui/react';
+import { Flex, Spinner, Box, Text, Input, Button } from '@chakra-ui/react';
 
 const ChatClient: React.FC = () => {
   const [messages, setMessages] = useState<string[]>([]);
@@ -55,15 +55,26 @@ const ChatClient: React.FC = () => {
   }
 
   return (
-    <div>
-      <div style={{ height: '300px', overflowY: 'scroll', border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
+    <Flex direction="column" alignItems="center">
+      <Box
+        height="300px"
+        overflowY="scroll"
+        border="1px solid #ccc"
+        padding="10px"
+        marginBottom="10px"
+      >
         {messages.map((msg, index) => (
-          <div key={index}>{msg}</div>
+          <Text key={index}>{msg}</Text>
         ))}
-      </div>
-      <input type="text" value={inputMessage} onChange={(e) => setInputMessage(e.target.value)} />
-      <button onClick={sendMessage}>Send</button>
-    </div>
+      </Box>
+      <Input
+        type="text"
+        value={inputMessage}
+        onChange={(e) => setInputMessage(e.target.value)}
+        marginBottom="10px"
+      />
+      <Button onClick={sendMessage}>Send</Button>
+    </Flex>
   );
 };
 
