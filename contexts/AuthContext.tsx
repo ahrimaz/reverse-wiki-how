@@ -24,6 +24,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
 
   useEffect(() => {
+    // Clear the old 'user' entry from local storage
+    localStorage.removeItem('user');
+  
     const token = localStorage.getItem('token');
     const username = localStorage.getItem('username');
     if (token && username) {
@@ -31,6 +34,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
     setLoading(false);
   }, []);
+  
 
   const login = (token: string, username: string) => {
     localStorage.setItem('token', token);
