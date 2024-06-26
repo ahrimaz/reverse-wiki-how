@@ -48,7 +48,7 @@ const FileUpload: React.FC = () => {
       <button onClick={handleFileUpload}>Upload</button>
       <div>
         {uploadedFiles.map((file, index) => (
-          <img key={index} src={`https://energetic-tidy-ray.glitch.me${file.filePath}`} alt={`Uploaded ${index}`} />
+          <img key={index} src={`https://energetic-tidy-ray.glitch.me/${file.filePath}`} alt={`Uploaded ${index}`} />
         ))}
       </div>
     </div>
