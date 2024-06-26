@@ -22,6 +22,9 @@ export default function Navbar() {
         <Link fontSize="xl" fontWeight="bold" href='/register'>Register</Link>
       </Box>
       <Box mr={4}>
+        <Link fontSize="xl" fontWeight="bold" href='/upload'>Upload</Link>
+      </Box>
+      <Box mr={4}>
         {isAuthenticated ? (
           <Text fontSize="xl" fontWeight="bold" cursor="pointer" onClick={logout}>Logout</Text>
         ) : (
