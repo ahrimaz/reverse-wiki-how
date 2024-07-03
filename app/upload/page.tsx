@@ -1,6 +1,7 @@
 import { Box, Heading, Text } from '@chakra-ui/react';
 import React from 'react';
 import FileUpload from '@/components/FileUpload';
+import CreateSlideshow from '@/components/CreateSlideshow';
 
 const AboutPage: React.FC = () => {
     return (
@@ -9,6 +10,7 @@ const AboutPage: React.FC = () => {
                 Upload images here
             </Heading>
             <FileUpload />
+            <CreateSlideshow />
         </Box>
     );
 };
