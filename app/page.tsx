@@ -1,5 +1,4 @@
 import { Box, Flex } from "@chakra-ui/react";
-import SlideShow from "@/components/SlideShow";
 import ChatClient from "@/components/ChatClient";
 
 const images = [
@@ -14,9 +13,6 @@ export default function Home() {
   return (
     <>
       <Flex align="center" justify="center">
-        <Box mr={4}>
-          <SlideShow images={images} />
-        </Box>
         <Box ml={4}>
           <ChatClient />
         </Box>
