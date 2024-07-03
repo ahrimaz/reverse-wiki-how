@@ -2,14 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 
-interface Image {
-  _id: string;
-  url: string;
-}
-
 const CreateSlideshow: React.FC = () => {
-  const [name, setName] = useState<string>('');
-  const [images, setImages] = useState<Image[]>([]);
+  const [name, setName] = useState('');
+  const [images, setImages] = useState<any[]>([]);
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
 
   useEffect(() => {
@@ -23,7 +18,7 @@ const CreateSlideshow: React.FC = () => {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
       });
-      const data: Image[] = await response.json();
+      const data = await response.json();
       setImages(data);
     } catch (error) {
       console.error('Error fetching images:', error);
@@ -53,6 +48,7 @@ const CreateSlideshow: React.FC = () => {
 
   return (
     <div>
+      <h2>Create Slideshow</h2>
       <input
         type="text"
         value={name}
