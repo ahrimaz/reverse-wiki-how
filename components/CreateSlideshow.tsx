@@ -2,9 +2,14 @@
 
 import React, { useState, useEffect } from 'react';
 
+interface Image {
+  _id: string;
+  url: string;
+}
+
 const CreateSlideshow: React.FC = () => {
   const [name, setName] = useState('');
-  const [images, setImages] = useState<any[]>([]);
+  const [images, setImages] = useState<Image[]>([]);
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
 
   useEffect(() => {
