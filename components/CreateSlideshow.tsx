@@ -53,7 +53,6 @@ const CreateSlideshow: React.FC = () => {
 
   return (
     <div>
-      <h2>Create Slideshow</h2>
       <input
         type="text"
         value={name}
