@@ -81,7 +81,7 @@ return (
                         }
                     }}
                     outline={selectedImages.includes(image._id) ? '2px solid blue' : 'none'}
-                    margin="0.5rem"
+                    margin="1rem"
                 >
                     <Image src={image.url} alt="uploaded" width="300" height="300" />
                 </Box>
