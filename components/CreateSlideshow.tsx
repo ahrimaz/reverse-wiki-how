@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
+import { Box, Button, Checkbox, FormControl, FormLabel, Heading, Image, Input } from '@chakra-ui/react';
 
 interface image {
     url: string;
@@ -54,38 +55,37 @@ const CreateSlideshow = () => {
     }
   };
 
-  return (
-    <div>
-      <h2>Create Slideshow</h2>
-      <input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Slideshow Name"
-      />
-      <div>
-        <h3>Select Images</h3>
-        {images.map((image) => (
-          <div key={image._id}>
-            <input
-              type="checkbox"
-              value={image._id}
-              onChange={(e) => {
-                const imageId = e.target.value;
-                if (selectedImages.includes(imageId)) {
-                  setSelectedImages(selectedImages.filter((id) => id !== imageId));
-                } else {
-                  setSelectedImages([...selectedImages, imageId]);
-                }
-              }}
-            />
-            <img src={image.url} alt="uploaded" width="100" />
-          </div>
-        ))}
-      </div>
-      <button onClick={handleSubmit}>Create Slideshow</button>
-    </div>
-  );
+return (
+    <Box>
+        <Heading>Create Slideshow</Heading>
+        <Input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Slideshow Name"
+        />
+        <Box>
+            <Heading as="h3">Select Images</Heading>
+            {images.map((image) => (
+                <Box key={image._id}>
+                    <Checkbox
+                        value={image._id}
+                        onChange={(e) => {
+                            const imageId = e.target.value;
+                            if (selectedImages.includes(imageId)) {
+                                setSelectedImages(selectedImages.filter((id) => id !== imageId));
+                            } else {
+                                setSelectedImages([...selectedImages, imageId]);
+                            }
+                        }}
+                    />
+                    <Image src={image.url} alt="uploaded" width="100" />
+                </Box>
+            ))}
+        </Box>
+        <Button onClick={handleSubmit}>Create Slideshow</Button>
+    </Box>
+);
 };
 
 export default CreateSlideshow;
