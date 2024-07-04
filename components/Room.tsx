@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ChatClient from './ChatClient';
 import SlideShow from './SlideShow';
+import { Box, Flex, Select } from '@chakra-ui/react';
 
 const Room: React.FC = () => {
   const [slideshows, setSlideshows] = useState<any[]>([]);
@@ -28,21 +29,27 @@ const Room: React.FC = () => {
     }
   };
 
-  return (
+return (
     <div>
-      <h1>Room</h1>
-      <select onChange={(e) => setSelectedSlideshow(e.target.value)}>
-        <option value="">Select a slideshow</option>
-        {slideshows.map((slideshow) => (
-          <option key={slideshow._id} value={slideshow._id}>
-            {slideshow.name}
-          </option>
-        ))}
-      </select>
-      {selectedSlideshow && <SlideShow slideshowId={selectedSlideshow} />}
-      <ChatClient />
+        <h1>Room</h1>
+        <Flex>
+            <Box flex="1">
+                <Select onChange={(e) => setSelectedSlideshow(e.target.value)}>
+                    <option value="">Select a slideshow</option>
+                    {slideshows.map((slideshow) => (
+                        <option key={slideshow._id} value={slideshow._id}>
+                            {slideshow.name}
+                        </option>
+                    ))}
+                </Select>
+                {selectedSlideshow && <SlideShow slideshowId={selectedSlideshow} />}
+            </Box>
+            <Box flex="1">
+                <ChatClient />
+            </Box>
+        </Flex>
     </div>
-  );
+);
 };
 
 export default Room;
