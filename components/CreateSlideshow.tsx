@@ -1,15 +1,8 @@
-'use client'
-
 import React, { useState, useEffect } from 'react';
 
-interface Image {
-  _id: string;
-  url: string;
-}
-
-const CreateSlideshow: React.FC = () => {
+const CreateSlideshow = () => {
   const [name, setName] = useState('');
-  const [images, setImages] = useState<Image[]>([]);
+  const [images, setImages] = useState<{ _id: string; url: string }[]>([]);
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
 
   useEffect(() => {
@@ -23,6 +16,9 @@ const CreateSlideshow: React.FC = () => {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
       });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       const data = await response.json();
       setImages(data);
     } catch (error) {
