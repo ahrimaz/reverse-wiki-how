@@ -67,18 +67,20 @@ return (
         <Box display="flex" flexDirection="row">
             <Heading as="h3">Select Images</Heading>
             {images.map((image) => (
-                <Box key={image._id} display="flex" flexDirection="column" alignItems="center">
-                    <Checkbox
-                        value={image._id}
-                        onChange={(e) => {
-                            const imageId = e.target.value;
-                            if (selectedImages.includes(imageId)) {
-                                setSelectedImages(selectedImages.filter((id) => id !== imageId));
-                            } else {
-                                setSelectedImages([...selectedImages, imageId]);
-                            }
-                        }}
-                    />
+                <Box
+                    key={image._id}
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                    onClick={() => {
+                        const imageId = image._id;
+                        if (selectedImages.includes(imageId)) {
+                            setSelectedImages(selectedImages.filter((id) => id !== imageId));
+                        } else {
+                            setSelectedImages([...selectedImages, imageId]);
+                        }
+                    }}
+                >
                     <Image src={image.url} alt="uploaded" width="300" height="300" />
                 </Box>
             ))}
