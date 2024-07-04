@@ -2,9 +2,14 @@
 
 import React, { useState, useEffect } from 'react';
 
+interface image {
+    url: string;
+    _id: string;
+}
+
 const CreateSlideshow = () => {
   const [name, setName] = useState('');
-  const [images, setImages] = useState<{ _id: string; url: string }[]>([]);
+  const [images, setImages] = useState<image[]>([]);
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
 
   useEffect(() => {
@@ -13,7 +18,7 @@ const CreateSlideshow = () => {
 
   const fetchImages = async () => {
     try {
-      const response = await fetch('https://energetic-tidy-ray.glitch.me/images', {
+      const response = await fetch('https://energetic-tidy-ray.glitch.me/files/images', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
