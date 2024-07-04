@@ -64,10 +64,10 @@ return (
             onChange={(e) => setName(e.target.value)}
             placeholder="Slideshow Name"
         />
-        <Box>
+        <Box display="flex" flexDirection="row">
             <Heading as="h3">Select Images</Heading>
             {images.map((image) => (
-                <Box key={image._id}>
+                <Box key={image._id} display="flex" flexDirection="column" alignItems="center">
                     <Checkbox
                         value={image._id}
                         onChange={(e) => {
@@ -79,7 +79,7 @@ return (
                             }
                         }}
                     />
-                    <Image src={image.url} alt="uploaded" width="100" />
+                    <Image src={image.url} alt="uploaded" width="300" height="300" />
                 </Box>
             ))}
         </Box>
